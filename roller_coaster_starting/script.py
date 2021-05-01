@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 
 # load rankings data here:
 wood = pd.read_csv('roller_coaster_starting/Golden_Ticket_Award_Winners_Wood.csv')
-print(wood.head())
+# print(wood.head())
 steel = pd.read_csv('roller_coaster_starting/Golden_Ticket_Award_Winners_Steel.csv')
-print(steel.head())
+# print(steel.head())
 # print(wood[wood.Name == 'El Toro'])
 
 # write function to plot rankings over time for 1 roller coaster here:
@@ -51,7 +51,7 @@ def two_coasters(coaster_name1, coaster_name2, park1, park2, ranking_df):
     plt.title('Two Coasters Rankings by Year')
     plt.gca().invert_yaxis()
     plt.show()
-two_coasters('El Toro', 'Boulder Dash', 'Six Flags Great Adventure', 'Lake Compounce', wood)
+# two_coasters('El Toro', 'Boulder Dash', 'Six Flags Great Adventure', 'Lake Compounce', wood)
 
 
 
@@ -72,15 +72,23 @@ plt.clf()
 
 
 
-
 plt.clf()
 
 # load roller coaster data here:
-
+coaster = pd.read_csv('roller_coaster_starting/roller_coasters.csv')
+print(coaster.head(10))
+print(coaster.speed.dtype)
 
 
 # write function to plot histogram of column values here:
-
+def quant_hist(df):
+    for col in df.columns:
+        if df[col].dtype == 'float64':
+            plt.clf()
+            plt.hist(df[col], color='orange', bins=10)
+            plt.title(col)
+            plt.show()
+quant_hist(coaster)
 
 
 
