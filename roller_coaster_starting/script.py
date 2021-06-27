@@ -1,11 +1,12 @@
+from numpy import angle
 import pandas as pd
 import matplotlib.pyplot as plt
-
+import seaborn as sns
 
 # load rankings data here:
-wood = pd.read_csv('roller_coaster_starting/Golden_Ticket_Award_Winners_Wood.csv')
+wood = pd.read_csv('Golden_Ticket_Award_Winners_Wood.csv')
 # print(wood.head())
-steel = pd.read_csv('roller_coaster_starting/Golden_Ticket_Award_Winners_Steel.csv')
+steel = pd.read_csv('Golden_Ticket_Award_Winners_Steel.csv')
 # print(steel.head())
 # print(wood[wood.Name == 'El Toro'])
 
@@ -13,7 +14,7 @@ steel = pd.read_csv('roller_coaster_starting/Golden_Ticket_Award_Winners_Steel.c
 def coaster_ranking(coaster_name, park, ranking_df):
     year_list = ranking_df['Year of Rank'][ranking_df.Name == coaster_name][ranking_df.Park == park]
     rank_list = ranking_df['Rank'][ranking_df.Name == coaster_name][ranking_df.Park == park]
-    plt.plot(year_list, rank_list, color='yellow')
+    plt.plot(year_list, rank_list, color='orange', lw='5')
     plt.title('{} Ranking by Year'.format(coaster_name))
     plt.xlabel('Year')
     plt.ylabel('Ranking')
@@ -75,9 +76,9 @@ plt.clf()
 plt.clf()
 
 # load roller coaster data here:
-coaster = pd.read_csv('roller_coaster_starting/roller_coasters.csv')
-print(coaster.head(10))
-print(coaster.speed.dtype)
+coaster = pd.read_csv('roller_coasters.csv')
+# print(coaster.head(10))
+# print(coaster.speed.dtype)
 
 
 # write function to plot histogram of column values here:
@@ -85,10 +86,9 @@ def quant_hist(df):
     for col in df.columns:
         if df[col].dtype == 'float64':
             plt.clf()
-            plt.hist(df[col], color='orange', bins=10)
-            plt.title(col)
+            sns.histplot(x=df[col])
             plt.show()
-quant_hist(coaster)
+# quant_hist(coaster)
 
 
 
@@ -101,9 +101,19 @@ quant_hist(coaster)
 plt.clf()
 
 # write function to plot inversions by coaster at a park here:
+def park_inversions(df, park_name):
+    inversions = df['num_inversions'][df['park'] == park_name]
+    print(inversions.head())
+    coasters = df['name'][df['park'] == park_name]
+    plt.clf()
+    ax = sns.barplot(x=coasters, y=inversions, color='green')
+    ax.set_xticklabels(coasters, rotation=10)
+    plt.legend(coasters)
+    plt.show()
+        
 
 
-
+park_inversions(coaster, 'Disneyland Park')
 
 
 
@@ -114,9 +124,36 @@ plt.clf()
 plt.clf()
 
 # write function to plot pie chart of operating status here:
+def operating_pie(coaster):
+    labels = coaster['status'].unique()
+    vals = coaster['status']
+    for i in range(len(vals)):
+        if vals[i] == vals[0]:
+            vals[i] = 0
+        elif vals[i] == vals[1]:
+            vals[i] = 1
+        elif vals[i] == vals[2]:
+            vals[i] = 2
+        elif vals[i] == vals[3]:
+            vals[i] = 3
+        elif vals[i] == vals[4]:
+            vals[i] = 4
+        elif vals[i] == vals[5]:
+            vals[i] = 5
+        elif vals[i] == vals[6]:
+            vals[i] = 6
+        elif vals[i] == vals[7]:
+            vals[i] = 7
+        elif vals[i] == vals[8]:
+            vals[i] = 8
+        else:
+            vals[i] = 9
+    plt.pie(vals)
+    plt.legend(labels)
+    plt.show()
+    # return vals
 
-
-
+# print(operating_pie(coaster))
 
 
 
